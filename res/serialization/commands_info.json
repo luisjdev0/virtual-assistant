@@ -1,0 +1,8 @@
+{
+	"hora" : "res/cmds/hora.jls",
+	"fecha" : "res/cmds/fecha.jls",
+	"navegador" : "res/cmds/navegador.jls",
+	"c-nombre" : "res/cmds/c_nombre.jls",
+	"c-alias" : "res/cmds/c_alias.jls",
+	"c-ass" : "res/cmds/c_ass.jls",
+}
