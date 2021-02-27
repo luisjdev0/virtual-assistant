@@ -73,7 +73,7 @@ class jl_reader:
 
 	def decode_file(self, file_path):
 		outputs = []
-		file = open(file_path, "r")
+		file = open(file_path, "r", encoding='UTF-8')
 		lines = list(file.readlines())
 
 		for i in range(len(lines)):
