@@ -17,4 +17,4 @@ class jls_bass:
 			self.skeys = keys['skeys']
 
 		#Invoca a la API
-		self.reader = jl_reader(self.fkeys, self.lkeys, self.skeys, thr_exc = False)
+		self.reader = jl_reader(self.fkeys, self.lkeys, self.skeys, thr_exc = True)

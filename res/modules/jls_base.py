@@ -65,11 +65,11 @@ class jl_reader:
 					return self.fkeys[line_words[0]](self.__list_to_sentence(sentence))
 				else:
 					print(f"No existe una función llamada '{line_words[0]}'")
-		except: 
+		except Exception: 
 			if not self.thr_exc:
 				print(f"Hubo un error: {exc_info()[1]}")
 			else:
-				raise exc_info()[0](exc_info([1]))
+				raise exc_info()[0](exc_info()[1])
 
 	def decode_file(self, file_path):
 		outputs = []

@@ -12,33 +12,57 @@ DIRS = {
     "user-data" : "res/user-data/data.json",
     "cmds" : "res/cmds",
     "CCF" : {
-        "BASE" : 'res/cmds/base/main.CCF',
-        "LOAD_INFO" : 'res/cmds/base/init.CCF'
+        "MAIN" : 'res/cmds/base/main.CCF',
+        "BASE" : 'res/cmds/base/init.CCF'
     }
 }
 
 #Información serializable
 globaldata = {
-    "Asistant-name" : "Casiopea"
+    "assistant-data" : {
+        "name" : "Casiopea",
+        "user-alias" : "Señor",
+        "voice-id" : "id",
+        "voice-volume" : 1,
+        "voice-rate" : 120
+    }
 }
 
 class gui_controller():
     def get_main_window(x):
-        app = QApplication(sys.argv)
         window = main_window()
         window.AppVersion.setText(f"Version: {APP_VERSION}")
+        window.setWindowTitle(f"{globaldata['assistant-data']['name']} - Asistente Virtual")
         window.show()
-        sys.exit(app.exec_())
+        app.exec_()
+    
+    def get_settings_window(x):
+        window = settings_window()
+        speak('Abriendo panel de ajustes')
+        window.show()
+        app.exec_()
+
+class CCF_extra_functions:
+    def load_data(x):
+        global globaldata
+        from json import load
+        jsonFile = open(DIRS['user-data'])
+        globaldata = load(jsonFile)
+        jsonFile.close()
 
 
 #Keys para decodificar
 keys = {
     "fkeys" : {
         "SPEAK" : lambda x: speak(x),
-        "GET-APP" : gui_controller.get_main_window
+        "GET-APP" : gui_controller.get_main_window,
+        "GET-SETTINGS" : gui_controller.get_settings_window,
+        "LOAD-DATA" : CCF_extra_functions.load_data
+
     },
     "skeys" : {
-
+        "ALIAS" : globaldata['assistant-data']['user-alias'],
+        "NAME" : globaldata['assistant-data']['name'],
     },
     "lkeys" : {
 

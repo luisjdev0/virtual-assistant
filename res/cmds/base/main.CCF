@@ -1,4 +1,5 @@
-SPEAK Cargando configuración base.
-SPEAK Información cargada.
+SPEAK Cargando configuración inicial.
+LOAD-DATA
+SPEAK Información cargada $ALIAS .
 SPEAK Mostrando ventana principal
 GET-APP

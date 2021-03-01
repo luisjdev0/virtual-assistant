@@ -26,6 +26,24 @@ def speak(text):
         playsound(voicedir)
         remove(voicedir)
         voiceid += 1
-    #de lo contrario, se eligirá una voz instalada
+    #de lo contrario, se eligirá la voz instalada que fue configurada
     else:
-        pass
+
+        #try:
+
+        import pyttsx3
+        from data.info import globaldata
+
+        info = globaldata['assistant-data']
+
+        engine = pyttsx3.init()
+        engine.setProperty('voice', info['voice-id'])
+        engine.setProperty('volume', info['voice-volume'])
+        engine.setProperty('rate', info['voice-rate'])
+
+        engine.say(text)
+        engine.runAndWait()
+        
+        #except:
+            
+            #print(text)
