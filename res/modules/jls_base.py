@@ -18,7 +18,8 @@ class jl_reader:
 			line_words = word.split(' ')
 
 			if line_words[0] in self.lkeys:
-				return (str(word), str(self.lkeys[line_words[0]](line_words[1:len(line_words)])))
+				value = (str(word), str(self.lkeys[line_words[0]](line_words[1:len(line_words)])))
+				return value
 			else:
 				print(f"No existe una función lista llamada '{line_words[0]}'")
 				return (None, None)
@@ -53,11 +54,10 @@ class jl_reader:
 
 			#DECODE LKEYS
 			word = self.__list_to_sentence(sentence)
-			lkey = self.__decode_lkeys(word)
-
-			if lkey != (None, None):
-				word = word.replace(lkey[0], lkey[1]).replace(':', '')
-
+			while word.find(self.lsep) != -1:
+				lkey = self.__decode_lkeys(word)
+				if lkey != (None, None):
+					word = word.replace(self.lsep+lkey[0]+self.lsep, lkey[1])
 			sentence = self.__sentence_to_list(word)
 			#Decode FKEYS
 			if line_words[0].find(self.lsep) == -1:

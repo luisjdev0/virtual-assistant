@@ -5,6 +5,7 @@ from res.modules.voice_controller import speak
 
 app = QApplication(sys.argv)
 
+#Clase heredable
 class window_base(QMainWindow):
     def __init__(self, ui_file):
         super().__init__()
@@ -13,8 +14,28 @@ class window_base(QMainWindow):
 #Clase Principal
 class main_window(window_base):
     def __init__(self):
+        from data.info import APP_VERSION
         super().__init__('ui/main.ui')
         self.CommandSpeech.setText("")
+        self.AppVersion.setText(APP_VERSION)
+        self.SendButton.clicked.connect(self.send_command)
+    
+    def keyPressEvent(self, event):
+        from PyQt5 import Qt
+        if event.key() == 16777220:
+            self.SendButton.click()
+    def closeEvent(self, event):
+        from data.info import globaldata
+        speak(f"Hasta pronto {globaldata['assistant-data']['user-alias']}")
+
+    def send_command(self):
+        from res.modules.command_manager import commands
+        command = self.CommandInput.text()
+        if command == "salir" or command == "exit":
+            self.close()
+        elif command != "":
+            commands.execute(command)
+
 
 #Clase Ajustes
 class settings_window(window_base):
@@ -32,7 +53,13 @@ class settings_window(window_base):
         self.VoiceVolume.sliderReleased.connect(self.check_voice)
         self.VoiceRate.sliderReleased.connect(self.check_voice)
     
-    #Guardar las preferencias
+    def closeEvent(self, event):
+        from os.path import isfile
+        from data.info import DIRS
+        if not isfile(DIRS['user-data']):
+            speak("De acuerdo, configuraremos luego")
+            sys.exit(0)
+
     def send_info(self):
         voice_info = self.voices[self.VoiceSelected.currentText()]
         if not self.AssistantName.text() != "" or not self.UserName.text() != "":
@@ -47,15 +74,15 @@ class settings_window(window_base):
                 self.StatusLabel.setText("Guardando información...")
 
                 globaldata['assistant-data']['name'] = self.AssistantName.text()
-                globaldata['assistant-data']['alias'] = self.UserName.text()
+                globaldata['assistant-data']['user-alias'] = self.UserName.text()
                 globaldata['assistant-data']['voice-id'] = voice_info
                 globaldata['assistant-data']['voice-volume'] = self.VoiceVolume.value()/100
                 globaldata['assistant-data']['voice-rate'] = self.VoiceRate.value()
 
                 try:
 
-                    jsonFile = open(DIRS['user-data'], 'w')
-                    jsonFile.write(json.dumps(globaldata))
+                    jsonFile = open(DIRS['user-data'], 'w', encoding='utf8')
+                    jsonFile.write(json.dumps(globaldata, ensure_ascii=False))
                     jsonFile.close()
                     self.StatusLabel.setText("Se guardó correctamente")
                     self.close()

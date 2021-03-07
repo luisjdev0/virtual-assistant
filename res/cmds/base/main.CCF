@@ -1,5 +1,5 @@
-SPEAK Cargando configuración inicial.
+SPEAK Cargando información
 LOAD-DATA
-SPEAK Información cargada $ALIAS .
+SPEAK Información cargada :GLOBALDATA 1: .
 SPEAK Mostrando ventana principal
 GET-APP

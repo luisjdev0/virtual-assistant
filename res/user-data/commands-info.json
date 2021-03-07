@@ -1,0 +1,10 @@
+[
+	{
+		"Command" : "hora.CCF",
+		"keys" : ["que hora es", "cual es la hora", "hora" ]
+	},
+	{
+		"Command" : "fecha.CCF",
+		"keys" : ["que día es hoy", "fecha", "dime que día es hoy", "cómo es la fecha?"]
+	}
+]

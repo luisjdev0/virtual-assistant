@@ -1,7 +1,6 @@
-SPEAK Hola, desde ahora seré tu nuevo asistente virtual.
-SPEAK Encantado de conocerte.
+SPEAK Hola. desde ahora seré tu nuevo asistente virtual.
 SPEAK Antes de comenzar, debemos configurar unas cosas primero
 SPEAK Comencemos.
 GET-SETTINGS
-SPEAK Ahora, ya podemos comenzar $ALIAS.
+SPEAK Ahora, ya podemos comenzar :GLOBALDATA 1: .
 SPEAK Reiniciando.

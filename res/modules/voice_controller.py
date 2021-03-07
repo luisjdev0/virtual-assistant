@@ -28,7 +28,6 @@ def speak(text):
         voiceid += 1
     #de lo contrario, se eligirá la voz instalada que fue configurada
     else:
-
         #try:
 
         import pyttsx3
