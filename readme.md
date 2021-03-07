@@ -1,4 +1,4 @@
-# Asistente Virtual (Casiopea v0.0.0.1)
+# Asistente Virtual (Casiopea v0.0.0.2)
 
 
 ## Descripción

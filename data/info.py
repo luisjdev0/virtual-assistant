@@ -8,7 +8,7 @@ from res.modules.load_jls import jls_bass
 from res.modules.CCF_extra_functions import CCF_extra_functions
 from ui.UI_manager import *
 
-APP_VERSION = "v0.0.0.1"
+APP_VERSION = "v0.0.0.2"
 
 #Directorios clave
 DIRS = {
