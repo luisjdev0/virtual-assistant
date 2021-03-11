@@ -1,7 +1,10 @@
 import sys
+import time
+import threading
+from res.modules.command_manager import commands
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from res.modules.voice_controller import speak
+from res.modules.voice_controller import speak, recognize
 
 app = QApplication(sys.argv)
 
@@ -16,9 +19,39 @@ class main_window(window_base):
     def __init__(self):
         from data.info import APP_VERSION
         super().__init__('ui/main.ui')
-        self.CommandSpeech.setText("")
         self.AppVersion.setText(APP_VERSION)
         self.SendButton.clicked.connect(self.send_command)
+        self.hilo = threading.Thread(target=self.get_voice_data, name="Speech-TT")
+        self.hilo2 = threading.Thread(target=self.get_voice_status, name="Speech-TT-STATUS")
+        self.hilo2_wait = False
+        self.hilo.setDaemon(True);self.hilo2.setDaemon(True)
+        self.hilo.start() ; self.hilo2.start()
+
+    #Hilo para escuchar al usuario
+    def get_voice_data(self):
+
+        while True:
+
+            text = recognize()
+            self.hilo2_wait = True
+            self.CommandSpeech.setText(text)
+            commands.execute(text)
+            time.sleep(3)
+            self.hilo2_wait = False
+
+    def get_voice_status(self):
+        text = "Escuchando"
+        while True:
+
+            if not self.hilo2_wait:
+                if text == "Escuchando...":
+                    text = "Escuchando"
+                else:
+                    text += "."
+
+                self.CommandSpeech.setText(text)
+            time.sleep(1)
+            
     
     def keyPressEvent(self, event):
         from PyQt5 import Qt
@@ -29,7 +62,7 @@ class main_window(window_base):
         speak(f"Hasta pronto {globaldata['assistant-data']['user-alias']}")
 
     def send_command(self):
-        from res.modules.command_manager import commands
+
         command = self.CommandInput.text()
         if command == "salir" or command == "exit":
             self.close()

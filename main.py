@@ -12,3 +12,10 @@ def run():
 
 if __name__ == "__main__":
 	run()
+	
+	#Limpiar audios
+	try:
+		for i in os.listdir(DIRS['folders']['audio']):
+			os.remove(f"{DIRS['folders']['audio']}/{i}")
+	except:
+		print(f"No se pudo eliminar el contenido de {DIRS['folders']['audio']}")

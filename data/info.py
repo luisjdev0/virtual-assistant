@@ -8,7 +8,7 @@ from res.modules.load_jls import jls_bass
 from res.modules.CCF_extra_functions import CCF_extra_functions
 from ui.UI_manager import *
 
-APP_VERSION = "v0.0.0.2"
+APP_VERSION = "v0.0.0.3"
 
 #Directorios clave
 DIRS = {
@@ -22,7 +22,8 @@ DIRS = {
     "folders" : {
         "user-data" : "res/user-data",
         "CMDS-BASE" : "res/cmds/base",
-        "CMDS-CUSTOM" : "res/cmds/custom"
+        "CMDS-CUSTOM" : "res/cmds/custom",
+        "audio" : "res/audio"
     }
 }
 

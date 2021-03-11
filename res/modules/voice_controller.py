@@ -1,3 +1,4 @@
+import threading
 voiceid = 0
 
 #Chequear acceso a internet
@@ -14,35 +15,53 @@ def is_connect():
 #Función para TTS
 def speak(text):
     global voiceid
-    #Si existe conexión, usará el servicio de google
-    if is_connect():
-        from gtts import gTTS
-        from playsound import playsound
-        from os import remove
-        from time import sleep
-        voicedir = f"res/{voiceid}.mp3"
-        voice = gTTS(text, lang="es")
-        voice.save(voicedir)
-        playsound(voicedir)
-        remove(voicedir)
-        voiceid += 1
-    #de lo contrario, se eligirá la voz instalada que fue configurada
-    else:
-        #try:
+    from data.info import DIRS
+    import time
+    while True:
+        try:
+            #Si existe conexión, usará el servicio de google
+            if is_connect():
+                from gtts import gTTS
+                from playsound import playsound
+                voicedir = f"{DIRS['folders']['audio']}/{voiceid}.mp3"
 
-        import pyttsx3
-        from data.info import globaldata
+                voice = gTTS(text, lang="es")
+                voice.save(voicedir)
+                playsound(voicedir)
 
-        info = globaldata['assistant-data']
+                voiceid += 1
+            #de lo contrario, se eligirá la voz instalada que fue configurada
+            else:
 
-        engine = pyttsx3.init()
-        engine.setProperty('voice', info['voice-id'])
-        engine.setProperty('volume', info['voice-volume'])
-        engine.setProperty('rate', info['voice-rate'])
+                import pyttsx3
+                from data.info import globaldata
 
-        engine.say(text)
-        engine.runAndWait()
-        
-        #except:
-            
-            #print(text)
+                info = globaldata['assistant-data']
+
+                engine = pyttsx3.init()
+                engine.setProperty('voice', info['voice-id'])
+                engine.setProperty('volume', info['voice-volume'])
+                engine.setProperty('rate', info['voice-rate'])
+
+                engine.say(text)
+                engine.runAndWait()
+            break
+        except:
+            time.sleep(1)
+
+#Speech to text
+
+def recognize():
+    
+    import speech_recognition as sr
+
+    recognizer = sr.Recognizer()
+
+    with sr.Microphone() as source:
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source)
+
+    try:
+        return recognizer.recognize_google(audio, language='es-CO').lower()
+    except:
+        return "No entendí .-."
