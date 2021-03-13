@@ -1,4 +1,6 @@
 import threading
+
+#ID para guardar los audios sin sobreescribirse
 voiceid = 0
 
 #Chequear acceso a internet
@@ -12,11 +14,13 @@ def is_connect():
     except:
         return False
 
-#Función para TTS
+#Función para TTS (Google o voz por ordenador según conexión a internet)
 def speak(text):
     global voiceid
     from data.info import DIRS
     import time
+    
+    #Intenta hablar indeterminadamente hasta que lo logra
     while True:
         try:
             #Si existe conexión, usará el servicio de google
@@ -49,7 +53,7 @@ def speak(text):
         except:
             time.sleep(1)
 
-#Speech to text
+#Reconocimiento de voz
 
 def recognize():
     

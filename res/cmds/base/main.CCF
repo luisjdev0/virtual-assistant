@@ -1,5 +1,5 @@
 SPEAK Cargando información
 LOAD-DATA
-SPEAK Información cargada :GLOBALDATA 1: .
+SPEAK Información cargada |GLOBALDATA 1| .
 SPEAK Mostrando ventana principal
 GET-APP

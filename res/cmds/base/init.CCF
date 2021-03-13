@@ -2,5 +2,5 @@ SPEAK Hola. desde ahora seré tu nuevo asistente virtual.
 SPEAK Antes de comenzar, debemos configurar unas cosas primero
 SPEAK Comencemos.
 GET-SETTINGS
-SPEAK Ahora, ya podemos comenzar :GLOBALDATA 1: .
+SPEAK Ahora, ya podemos comenzar |GLOBALDATA 1| .
 SPEAK Reiniciando.

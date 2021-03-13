@@ -1,9 +1,35 @@
-# Asistente Virtual (Casiopea v0.0.0.3)
+# Asistente Virtual (Casiopea v0.0.0.4)
 
 
 ## Descripción
 
 Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para optimizar el tiempo, está programado en python, usa interfaces graficas de Qt y Serialización en JSON. Aún se encuentra en desarollo.
+
+## Log Cambios (v0.0.0.4)
+
+- Se Añadió sistema de creación de comandos
+- Ahora el "App.exec_()" se ejecuta desde el main.py.
+- La ventana de ajustes ahora se puede abrir con el comando "ajustes".
+- Las ventanas secundarias ahora son variables de "main_window".
+- Ahora al guardar la información, el asistente dice "Guardardando la información".
+- La clase "gui_controller" ya no es estática.
+- Ahora se puede accerder a la main window desde la variable "W_WINDOW".
+- Se mejoró sutilmente el código de la configuración inicial.
+- Se revisó el código a rasgos generales, se comentó y optimizó..
+    - Se comentó mejor el módulo "data/info.py".
+    - Se comentó mejor el módulo "res/modules/CCF_extra_functions.py".
+    - Se comentó y optimizó el módulo "res/modules/command_manager.py".
+    - Se comentó y optimizó el módulo "res/modules/jls_base.py".
+    - Se comentó mejor el módulo "res/modules/load_jls.py".
+    - Se comentó mejor el módulo "res/modules/voice_controller.py".
+    - Se comentó mejor el módulo "res/modules/UI_manager.py".
+    - Se comentó mejor el módulo "main.py".
+- Debe hacerse revisión de "QCoreApplication::exec:: The event loop is already running" al ejecutar ajustes.
+- Ahora el caracter que delimita los LKEYS es "|" debido a que ":" es muy frecuente en URLs.
+- Se agregó la LKEY "EXECUTE" para ejecutar comandos CMD.
+- Se agregó la clase "default_commands" para los comandos que usa el asistente por defecto.
+- Se agregó la función "decode_document" para decodificar una hoja de comandos CCF desde texto plano
+- Se añadieron más Keys
 
 ## Log Cambios (v0.0.0.3)
 
@@ -13,7 +39,7 @@ Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para
 - La función SPEAK ahora es controlada con una excepción y un while que espera hasta poder hablar
 - Se añadió sistema de reconocimiento de voz
 - Se añadieron dos hilos nuevos ('Speech-TT', 'Speech-TT-Status') para controlar el flujo de voz
-- Los hilos añadidos, funcionan como daemons para terminarlos al finalizar la ejecución del programa.
+- Los hilos añadidos, funcionan como "daemons" para terminarlos al finalizar la ejecución del programa.
 - Se creó la función 'recognize' para el reconocimiento de voz
 - Ahora se pueden ejecutar comandos por medio de la voz
 

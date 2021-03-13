@@ -1,4 +1,3 @@
-#Información necesaria
 import sys
 import os
 from PyQt5.QtWidgets import QApplication
@@ -8,7 +7,8 @@ from res.modules.load_jls import jls_bass
 from res.modules.CCF_extra_functions import CCF_extra_functions
 from ui.UI_manager import *
 
-APP_VERSION = "v0.0.0.3"
+#Versión del asistente
+APP_VERSION = "v0.0.0.4"
 
 #Directorios clave
 DIRS = {
@@ -37,29 +37,53 @@ globaldata = {
         "voice-rate" : 120
     }
 }
+
+#Cargar la información de los comandos
 command_data = commands.load()
 
+#Clase que controla la UI con CCF
 class gui_controller():
-    def get_main_window(x):
-        window = main_window()
-        window.AppVersion.setText(f"Version: {APP_VERSION}")
-        window.setWindowTitle(f"{globaldata['assistant-data']['name']} - Asistente Virtual")
-        window.show()
-        app.exec_()
-    
-    def get_settings_window(x):
-        window = settings_window()
-        speak('Abriendo panel de ajustes')
-        window.show()
-        app.exec_()
 
-#Keys para decodificar
+    def __init__(self):
+        self.m_window = main_window()
+        self.m_window.AppVersion.setText(f"Version: {APP_VERSION}")
+
+    #Mostrar ventana principal
+    def get_main_window(self, x):
+        self.m_window.setWindowTitle(f"{globaldata['assistant-data']['name']} - Asistente Virtual")
+        self.m_window.show()
+    
+    #Mostrar ventana de ajustes
+    def get_settings_window(self, x):
+        global app
+        speak("Abriendo panel de ajustes")
+        self.m_window.settings.show()
+        try:
+            app.exec_()
+        except:
+            print("El hilo principal ya se encuentra en ejecución")
+    
+    def get_add_commands_window(self, x):
+        speak("Abriendo panel para agregar comandos")
+        name = globaldata['assistant-data']['name']
+        self.m_window.add_commands_window.setWindowTitle(f"{name} - Agregar Comando")
+        self.m_window.add_commands_window.set_viewer_keys()
+        self.m_window.add_commands_window.show()
+
+
+#Instancia de gui_controller
+GUI_CONTROLLER = gui_controller()
+
+#Keys para decodificar CCF
 keys = {
     "fkeys" : {
         "SPEAK" : lambda x: speak(x),
-        "GET-APP" : gui_controller.get_main_window,
-        "GET-SETTINGS" : gui_controller.get_settings_window,
-        "LOAD-DATA" : CCF_extra_functions.load_data
+        "GET-APP" : GUI_CONTROLLER.get_main_window,
+        "ADD-COMMAND" : GUI_CONTROLLER.get_add_commands_window,
+        "GET-SETTINGS" : GUI_CONTROLLER.get_settings_window,
+        "LOAD-DATA" : CCF_extra_functions.load_data,
+        "CMD" : CCF_extra_functions.execute_CMD,
+        "EXECUTE" : CCF_extra_functions.execute_program
 
     },
     "skeys" : {
@@ -73,3 +97,6 @@ keys = {
 
 #Decodificador base
 BASS_DECODER = jls_bass(keys)
+
+#Variable del main_window
+M_WINDOW = GUI_CONTROLLER.m_window

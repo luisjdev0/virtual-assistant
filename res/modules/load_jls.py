@@ -1,6 +1,6 @@
 from res.modules.jls_base import jl_reader
 
-#Clase Base de decodificadores CCF
+#Clase Base de decodificadores CCF en CASIOPEA
 class jls_bass:
 	def __init__(self, keys = ""):
 		self.control_var = None #Variable de control que registra las últimas entradas
@@ -8,13 +8,13 @@ class jls_bass:
 
 		if keys == "":
 			self.fkeys = {} #Claves mayores (Funciones principales)
-			self.lkeys = {} #Claves menores (Obtienen valores solicitados)
-			self.skeys = {} #Claves decoradoras (Modifican un valor por otro definido)
+			self.lkeys = {} #Claves menores (Obtienen valores solicitados de funciones o diccionarios)
+			self.skeys = {} #Claves decoradoras (Obtienen un valor simple o constante)
 
 		else:
 			self.fkeys = keys['fkeys']
 			self.lkeys = keys['lkeys']
 			self.skeys = keys['skeys']
 
-		#Invoca a la API
+		#Invoca a la API jls_base
 		self.reader = jl_reader(self.fkeys, self.lkeys, self.skeys, thr_exc = False)
