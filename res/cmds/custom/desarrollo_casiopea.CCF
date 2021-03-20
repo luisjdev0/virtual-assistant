@@ -1,0 +1,7 @@
+SPEAK Abriendo los recursos para trabajar en Casiopea |GLOBALDATA 1|
+SPEAK Abriendo el directorio raíz
+EXECUTE C:\Users\jltutoriales\Desktop\DEV\virtual-assistant
+SPEAK Abriendo Visual Studio Code
+EXECUTE C:\Users\jltutoriales\AppData\Local\Programs\Microsoft VS Code\Code.exe
+SPEAK Para finalizar, abriendo google
+EXECUTE https://google.com

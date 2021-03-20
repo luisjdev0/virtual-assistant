@@ -8,7 +8,7 @@ from res.modules.CCF_extra_functions import CCF_extra_functions
 from ui.UI_manager import *
 
 #Versión del asistente
-APP_VERSION = "v0.0.0.4"
+APP_VERSION = "v0.0.0.5"
 
 #Directorios clave
 DIRS = {
@@ -47,11 +47,13 @@ class gui_controller():
     def __init__(self):
         self.m_window = main_window()
         self.m_window.AppVersion.setText(f"Version: {APP_VERSION}")
+        self.splash = None
 
     #Mostrar ventana principal
     def get_main_window(self, x):
         self.m_window.setWindowTitle(f"{globaldata['assistant-data']['name']} - Asistente Virtual")
         self.m_window.show()
+        self.splash.close()
     
     #Mostrar ventana de ajustes
     def get_settings_window(self, x):
@@ -69,7 +71,24 @@ class gui_controller():
         self.m_window.add_commands_window.setWindowTitle(f"{name} - Agregar Comando")
         self.m_window.add_commands_window.set_viewer_keys()
         self.m_window.add_commands_window.show()
+    
+    def get_edit_commands_window(self, x):
+        speak("Abriendo panel de administración de comandos")
+        name = globaldata['assistant-data']['name']
+        self.m_window.edit_commands_window.setWindowTitle(f"{name} - Administrador de Comandos")
+        self.m_window.edit_commands_window.list_commands()
+        self.m_window.edit_commands_window.show()
 
+    def get_splash_screen(self, x):
+        from PyQt5.QtWidgets import QSplashScreen
+        from PyQt5.QtGui import QPixmap
+        from time import sleep
+        from threading import Thread
+
+
+        self.splash = QSplashScreen(QPixmap('icon.png'))
+        self.splash.show()
+        sleep(2)
 
 #Instancia de gui_controller
 GUI_CONTROLLER = gui_controller()
@@ -80,6 +99,7 @@ keys = {
         "SPEAK" : lambda x: speak(x),
         "GET-APP" : GUI_CONTROLLER.get_main_window,
         "ADD-COMMAND" : GUI_CONTROLLER.get_add_commands_window,
+        "EDIT-COMMAND" : GUI_CONTROLLER.get_edit_commands_window,
         "GET-SETTINGS" : GUI_CONTROLLER.get_settings_window,
         "LOAD-DATA" : CCF_extra_functions.load_data,
         "CMD" : CCF_extra_functions.execute_CMD,

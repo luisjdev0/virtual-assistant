@@ -50,7 +50,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Command:</string>
+     <string>Comando:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="CommandInput">

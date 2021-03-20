@@ -54,7 +54,9 @@ class default_commands:
         commands_keys = {
             "ajustes" : default_commands.settings_panel,
             "agregar comandos" : default_commands.add_command_panel,
-            "agregar comando" : default_commands.add_command_panel
+            "agregar comando" : default_commands.add_command_panel,
+            "editar comando" : default_commands.edit_commands_panel,
+            "editar comandos" : default_commands.edit_commands_panel
         }
 
         if key in commands_keys:
@@ -64,11 +66,16 @@ class default_commands:
             return False
 
     def settings_panel():
-        from data.info import globaldata, GUI_CONTROLLER
+        from data.info import GUI_CONTROLLER
         GUI_CONTROLLER.get_settings_window(0)
         return ""
 
     def add_command_panel():
-        from data.info import globaldata, GUI_CONTROLLER
+        from data.info import GUI_CONTROLLER
         GUI_CONTROLLER.get_add_commands_window(0)
         return ""
+    
+    def edit_commands_panel():
+        from data.info import GUI_CONTROLLER
+        GUI_CONTROLLER.get_edit_commands_window(0)
+

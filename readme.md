@@ -1,11 +1,31 @@
-# Asistente Virtual (Casiopea v0.0.0.4)
+# Asistente Virtual (Casiopea v0.0.0.5)
 
 
 ## Descripción
 
-Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para optimizar el tiempo, está programado en python, usa interfaces graficas de Qt y Serialización en JSON. Aún se encuentra en desarollo.
+Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para optimizar el tiempo, está programado en python, usa interfaces graficas de Qt, Serialización en JSON, Encodificación en un sistema personalizado llamado CCF (Casiopea Command File) y Sistema de comandos (adición/administración) Aún se encuentra en desarollo.
+
+## Log Cambios (v0.0.0.5)
+### Administrador de comandos
+
+- Se modificó la UI del administrador de comandos.
+- Se creo la clase "edit_commands_window" para el administrador de comandos.
+- Se agregó el comando que ejecuta el administrador de comandos.
+- Se agregó la key que ejecuta el administrador de comandos mediante CCF.
+- Ahora se pueden eliminar comandos desde el administrador.
+- Ahora se pueden editar/modificar comandos desde el administrador.
+- Ahora las CCFkeys se ven como listas en el administrador de comandos.
+- Ahora se pueden ver las keys de cada comando en el administrador de comandos.
+- Ahora al agregar un comando, se verifica su existencia para modificarlo.
+- Se optimizó el código de la administración de comandos.
+- Ahora en la ventana principal pone el mensaje "Comandos"
+- Ahora existe una Splash Screen al cargar el programa (Provisional).
+- Ahora se dispone del "icon.ico"
+- Se agregó el botón "Crear comando" desde el administrador de comandos.
+
 
 ## Log Cambios (v0.0.0.4)
+### Creación de comandos [+Optimización]
 
 - Se Añadió sistema de creación de comandos
 - Ahora el "App.exec_()" se ejecuta desde el main.py.
@@ -32,6 +52,7 @@ Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para
 - Se añadieron más Keys
 
 ## Log Cambios (v0.0.0.3)
+### Hilos y Reconocimiento de voz
 
 - Ahora los comandos se ejecutan en un hilo llamado "hilo_comandos"
 - Se agregó la carpeta "res/audio" donde se guardarán los archivos TTS
@@ -44,6 +65,7 @@ Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para
 - Ahora se pueden ejecutar comandos por medio de la voz
 
 ## Log Cambios (v0.0.0.2)
+### Sistema de comandos
 
 - Carpetas requeridas creadas automáticamente.
 - Se añadió el control para el reconocimiento de voz en la UI (Aún sin lógica)
@@ -59,6 +81,7 @@ Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para
 - Ahora se puede enviar un comando pulsando la tecla "Enter"
 
 ## Log Cambios (v0.0.0.1)
+### Primeros pasos
 
 - Se estructuró de forma completamente nueva.
 - Obtuvo un ícono.

@@ -3,6 +3,7 @@ import os
 
 #Función principal
 def run():
+	GUI_CONTROLLER.get_splash_screen(0)
 	global globaldata
 	CCF_extra_functions.set_required_folders()
 	if(not os.path.exists(DIRS['user-data'])):

@@ -22,13 +22,16 @@ class main_window(window_base):
         super().__init__('ui/main.ui')
         self.AppVersion.setText(APP_VERSION)
         self.SendButton.clicked.connect(self.send_command)
+
         self.hilo = threading.Thread(target=self.get_voice_data, name="Speech-TT")
         self.hilo2 = threading.Thread(target=self.get_voice_status, name="Speech-TT-STATUS")
         self.hilo2_wait = False
         self.hilo.setDaemon(True);self.hilo2.setDaemon(True)
         self.hilo.start() ; self.hilo2.start()
+
         self.settings = settings_window()
         self.add_commands_window = add_commands_window()
+        self.edit_commands_window = edit_commands_window()
 
     #Hilo para escuchar al usuario
     def get_voice_data(self):
@@ -178,19 +181,16 @@ class add_commands_window(window_base):
         from data.info import keys
 
         #fkeys
-        text = ""
-        for key in keys['fkeys'].keys(): text += f"{key}\n"
-        self.CommandFKEYS.setText(text)
+        for key in keys['fkeys'].keys():
+            self.CommandFKEYS.addItem(key)
         
         #skeys
-        text = ""
-        for key in keys['skeys'].keys(): text += f"${key}\n"
-        self.CommandSKEYS.setText(text)
+        for key in keys['skeys'].keys():
+            self.CommandSKEYS.addItem(key)
 
         #lkeys
-        text = ""
-        for key in keys['lkeys'].keys(): text += f"|{key}|\n"
-        self.CommandLKEYS.setText(text)
+        for key in keys['lkeys'].keys():
+            self.CommandLKEYS.addItem(f"|{key}|")
 
     def test_command(self):
         from data.info import BASS_DECODER
@@ -207,18 +207,130 @@ class add_commands_window(window_base):
             speak("No puedes guardar un comando vacío")
         else:
             speak("Guardando el comando")
-            try:
-                path = f"{DIRS['folders']['CMDS-CUSTOM']}/{self.CommandName.text()}.CCF"
-                with open(path, 'w', encoding='utf8') as command_file:
-                    command_file.write(self.CommandContent.toPlainText())
-                
-                command_keys = self.CommandKeys.toPlainText().split(",")
+
+            command_isset = False
+            command_keys = self.CommandKeys.toPlainText().split(",")
+            for i in range(len(command_data)):
+                if command_data[i]['Command'] == self.CommandName.text():
+                    command_data[i]['keys'] = command_keys
+                    command_isset = True
+                    break
+            
+            if not command_isset:
                 command_data.append({
                     "Command" : f"{self.CommandName.text()}.CCF",
                     "keys" : command_keys
                 })
-                commands.save(command_data)
+
+
+            #try:
+            if not command_isset:
+                path = f"{DIRS['folders']['CMDS-CUSTOM']}/{self.CommandName.text()}.CCF"
+            else:
+                path = f"{DIRS['folders']['CMDS-CUSTOM']}/{self.CommandName.text()}"
+
+            with open(path, 'w', encoding='utf8') as command_file:
+                command_file.write(self.CommandContent.toPlainText())
+            
+            commands.save(command_data)
+
+            if not command_isset:
                 speak(f"Se guardó el comando {globaldata['assistant-data']['user-alias']}")
-                self.close()
-            except:
-                speak("No se pudo guardar el comando")
+            else:
+                speak(f"Se modificó el comando {globaldata['assistant-data']['user-alias']}")
+            self.close()
+            #except:
+                #speak("No se pudo guardar el comando")
+    
+    def get_command_to_edit(self, command):
+        from data.info import DIRS
+        path = f"{DIRS['folders']['CMDS-CUSTOM']}/{command['Command']}"
+        text = open(path, 'r').read()
+
+        self.CommandContent.setPlainText(text)
+        
+        self.CommandName.setText(command['Command'].replace('.CFF', ''))
+        self.CommandName.setEnabled(False)
+        
+        text = ""
+        for key in command['keys']:
+            text += f"{key},"
+        text = text[:-1]
+        self.CommandKeys.setPlainText(text)
+
+
+#Clase Editar Comandos
+class edit_commands_window(window_base):
+    def __init__(self):        
+        super().__init__('ui/edit_commands.ui')
+
+        self.w_edit_command = add_commands_window()
+        self.selected_command = None
+
+        self.CommandEdit.clicked.connect(self.edit_command)
+        self.CommandDelete.clicked.connect(self.delete_command)
+        self.CommandCreate.clicked.connect(self.create_command)
+        self.CommandSelect.currentIndexChanged.connect(self.get_command_keys)
+        self.list_commands()
+    
+    def get_command_keys(self):
+        from data.info import command_data
+        self.KeyList.clear()
+        name = self.CommandSelect.currentText()
+        for command in command_data:
+            if command['Command'] == name:
+                self.selected_command = command
+                self.KeyList.addItems(command['keys'])
+                break
+
+    def list_commands(self):
+        from data.info import command_data
+        #Listar comandos
+        self.CommandSelect.clear()
+        self.KeyList.clear()
+        for command in command_data:
+            self.CommandSelect.addItem(command['Command'])
+
+    def closeEvent(self, event):
+        from data.info import globaldata
+        name = globaldata['assistant-data']['user-alias']
+        speak(f"Cerrando panel de comandos {name}.")
+        
+    def edit_command(self):
+        from data.info import globaldata
+        name = globaldata['assistant-data']['name']
+
+        self.w_edit_command.get_command_to_edit(self.selected_command)
+        self.w_edit_command.setWindowTitle(f"{name} - Agregar Comando")
+        self.w_edit_command.set_viewer_keys()
+        self.w_edit_command.show()
+
+        self.list_commands()
+    
+    def delete_command(self):
+        from data.info import command_data, globaldata, DIRS
+        from res.modules.command_manager import commands
+        from os import remove
+        user = globaldata['assistant-data']['user-alias']
+
+        try:
+            speak(f"Eliminando {self.selected_command['Command']}")
+            _dir = f"{DIRS['folders']['CMDS-CUSTOM']}/{self.selected_command['Command']}"
+
+            for i in range(len(command_data)):
+                if command_data[i]['Command'] == self.selected_command['Command']:
+                    command_data.pop(i)
+                    break
+                
+            remove(_dir)
+            commands.save(command_data)
+            speak(f"Se eliminó el comando {user}.")
+
+        except:
+            speak(f"No se pudo eliminar el comando {user}.")
+        
+        self.list_commands()
+
+    def create_command(self):
+        from data.info import GUI_CONTROLLER
+        GUI_CONTROLLER.get_add_commands_window(0)
