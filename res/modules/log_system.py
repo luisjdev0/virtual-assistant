@@ -24,7 +24,7 @@ class system_log:
                 self.log_file = open(self.logfilepath, 'w', encoding='utf8')
             else:
                 self.log_file = open(self.logfilepath, 'a', encoding='utf8')
-                self.log_file.write("\n ---------------------------------- \n")
+                self.log_file.write("\n ---------------------------------- \n\n")
 
     def write(self, text):
         if self.log_print:
