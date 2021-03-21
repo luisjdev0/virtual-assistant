@@ -1,0 +1,7 @@
+*__pycache__/
+*.pyc
+res/audio/
+res/cmds/custom/
+res/user-data/
+res/log
+readme.md

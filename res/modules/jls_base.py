@@ -92,7 +92,8 @@ class jl_reader:
 				outputs.append(self.decode_line(lines[i]))
 				
 		return outputs
-
+	
+	#Decodifica texto plano como si fuera un documento externo
 	def decode_document(self, text):
 		lines = text.split('\n')
 		for i in range(len(lines)):

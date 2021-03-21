@@ -6,7 +6,8 @@ class commands:
     
     #Carga o crea el archivo de control de comandos JSON
     def load():
-        from data.info import DIRS
+        from data.info import DIRS, SYSTEM_LOG
+        SYSTEM_LOG.write("Cargando clase commandos")
         if (not isfile(DIRS['commands-data'])):
             open(DIRS['commands-data'], 'w', encoding='utf8').close()
             return {}
@@ -14,12 +15,17 @@ class commands:
             return json.load(open(DIRS['commands-data'], encoding='utf8'))
     
     def save(data):
-        from data.info import DIRS
+        from data.info import DIRS, SYSTEM_LOG
+        SYSTEM_LOG.write(f"Ejecutando commands.save({data})")
         with open(DIRS['commands-data'], 'w', encoding='utf8') as jsonFile:
             jsonFile.write(json.dumps(data, ensure_ascii=False))
 
     #Ejecuta el comando CCF según el key (que debe encontrarse en el control de comandos)
     def execute(key):
+        key = key.lower()
+
+        from data.info import SYSTEM_LOG
+        SYSTEM_LOG.write(f"Ejecutando commands.execute({key})")
 
         #Si es un comando que debe ejecutarse en hilo principal
         if not default_commands.find_command(key):
@@ -38,7 +44,8 @@ class commands:
     
     #Decodifica el comando CCF según la key
     def run_command(key):
-        from data.info import command_data, BASS_DECODER, DIRS
+        from data.info import command_data, BASS_DECODER, DIRS, SYSTEM_LOG
+        SYSTEM_LOG.write(f"Ejecutando commands.run_command({key})")
 
         for command_info in command_data:
             if key in command_info['keys']:
@@ -50,13 +57,19 @@ class commands:
 #Clase que comprueba los comandos por defecto del asistente
 class default_commands:
 
+    #Establece y busca si el comando que se envió hace parte de los predeterminados
     def find_command(key):
+        from data.info import SYSTEM_LOG
+        SYSTEM_LOG.write(f"Ejecutando default_commands.find_command({key})")
+
         commands_keys = {
             "ajustes" : default_commands.settings_panel,
             "agregar comandos" : default_commands.add_command_panel,
             "agregar comando" : default_commands.add_command_panel,
             "editar comando" : default_commands.edit_commands_panel,
-            "editar comandos" : default_commands.edit_commands_panel
+            "editar comandos" : default_commands.edit_commands_panel,
+            "comandos" : default_commands.edit_commands_panel,
+            "administrar comandos" : default_commands.edit_commands_panel,
         }
 
         if key in commands_keys:
@@ -65,17 +78,23 @@ class default_commands:
         else:
             return False
 
+    #Abre el panel de ajustes mediante Comando por defecto.
     def settings_panel():
-        from data.info import GUI_CONTROLLER
+        from data.info import GUI_CONTROLLER, SYSTEM_LOG
+        SYSTEM_LOG.write("Ejecutando default_commands.settings_panel()")
         GUI_CONTROLLER.get_settings_window(0)
         return ""
 
+    #Abre el panel de creación de comandos mediante Comando por defecto.
     def add_command_panel():
-        from data.info import GUI_CONTROLLER
+        from data.info import GUI_CONTROLLER, SYSTEM_LOG
+        SYSTEM_LOG.write("Ejecutando default_commands.add_command_panel()")
         GUI_CONTROLLER.get_add_commands_window(0)
         return ""
     
+    #Abre el administrador de comandos mediante Comando por defecto.
     def edit_commands_panel():
-        from data.info import GUI_CONTROLLER
+        from data.info import GUI_CONTROLLER, SYSTEM_LOG
+        SYSTEM_LOG.write("Ejecutando default_commands.edit_command_panel()")
         GUI_CONTROLLER.get_edit_commands_window(0)
 

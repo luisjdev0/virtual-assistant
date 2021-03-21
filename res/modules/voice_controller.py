@@ -6,6 +6,8 @@ voiceid = 0
 #Chequear acceso a internet
 def is_connect():
     from socket import gethostbyname, create_connection, error
+    from data.info import SYSTEM_LOG
+    SYSTEM_LOG.write("Verificando conexión para voz")
     try:
         gethostbyname("google.com")
         connection = create_connection(("google.com", 80), 1)
@@ -17,7 +19,8 @@ def is_connect():
 #Función para TTS (Google o voz por ordenador según conexión a internet)
 def speak(text):
     global voiceid
-    from data.info import DIRS
+    from data.info import DIRS, SYSTEM_LOG
+    SYSTEM_LOG.write(f"Hablando ({text})")
     import time
     
     #Intenta hablar indeterminadamente hasta que lo logra

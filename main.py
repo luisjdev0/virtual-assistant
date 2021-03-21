@@ -3,9 +3,11 @@ import os
 
 #Función principal
 def run():
-	GUI_CONTROLLER.get_splash_screen(0)
+	GUI_CONTROLLER.get_splash_screen(2)
 	global globaldata
-	CCF_extra_functions.set_required_folders()
+	CCF_extra_functions.set_required_folders(0)
+	SYSTEM_LOG.write("Run program")
+
 	if(not os.path.exists(DIRS['user-data'])):
 		BASS_DECODER.reader.decode_file(DIRS['CCF']['BASE'])
 
@@ -14,6 +16,8 @@ def run():
 	app.exec_()
 
 if __name__ == "__main__":
+	print("A")
+
 	run()
 	
 	#Limpiar audios del asistente al finalizar ejecución

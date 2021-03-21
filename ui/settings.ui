@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>594</width>
-    <height>350</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>594</width>
-    <height>350</height>
+    <height>360</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>594</width>
-    <height>350</height>
+    <height>360</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -320,6 +320,22 @@
     </property>
     <property name="format">
      <string>%p%</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClearData">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>310</y>
+      <width>571</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Borrar Datos</string>
     </property>
    </widget>
   </widget>
