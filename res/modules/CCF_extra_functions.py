@@ -2,9 +2,15 @@ import os
 
 #Clase estática que controla el comportamiento del CCF
 class CCF_extra_functions:
+    '''
+    Clase estática que controla el comportamiento del CCF
+    '''
     
     #Carga la información necesaria de los comandos
     def load_data(x):
+        '''
+        Carga la información necesaria de los comandos
+        '''
         from data.info import globaldata, DIRS, SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.load_data({x})")
         global globaldata
@@ -14,6 +20,9 @@ class CCF_extra_functions:
 
     #Crea los folders necesarios en caso que falten (si es primera ejecución del programa)
     def set_required_folders(x):
+        '''
+        Crea los folders necesarios en caso que falten (si es primera ejecución del programa)
+        '''
         from data.info import globaldata, DIRS, SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.set_required_folders({x})")
         global globaldata
@@ -22,8 +31,12 @@ class CCF_extra_functions:
                 os.mkdir(DIRS['folders'][path])
                 print(f"{DIRS['folders'][path]} was created.")
 
-    #Obtiene información de globaldata para los comandos CCF (ej. :GLOBALDATA 1:)
+    #Obtiene información de globaldata para los comandos CCF (ej. |GLOBALDATA 1|)
     def get_globaldata_info(x):
+        '''
+        Obtiene información de globaldata para los comandos CCF
+        (ej. |GLOBALDATA 1|)
+        '''
         from data.info import globaldata, DIRS, SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.get_globaldata_info({x})")
         global globaldata
@@ -35,6 +48,9 @@ class CCF_extra_functions:
     
     #Obtiene información de la fecha para los comandos CCF (ej. :TIME S:)
     def get_date_info(x):
+        '''
+        Obtiene información de la fecha para los comandos CCF (ej. :TIME S:)
+        '''
         from data.info import SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.get_date_info({x})")
         x = x[0].upper()
@@ -55,12 +71,18 @@ class CCF_extra_functions:
 
     #Ejecuta en CMD la sentencia escrita con CCF
     def execute_CMD(x):
+        '''
+        Ejecuta en CMD la sentencia escrita con CCF
+        '''
         from data.info import SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.execute_CMD({x})")
         os.system(x)
     
     #Ejecuta el programa o la web especificado con CCF
     def execute_program(x):
+        '''
+        Ejecuta el programa o la web especificado con CCF
+        '''
         from data.info import SYSTEM_LOG
         SYSTEM_LOG.write(f"Ejecutando CCF_extra_functions.execute_program({x})")
         import webbrowser

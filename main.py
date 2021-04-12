@@ -3,8 +3,12 @@ import os
 
 #Función principal
 def run():
+	"""
+	Arrancar el asistente casiopea
+	"""
+	
 	GUI_CONTROLLER.get_splash_screen(2)
-	global globaldata
+
 	CCF_extra_functions.set_required_folders(0)
 	SYSTEM_LOG.write("Run program")
 
@@ -16,7 +20,6 @@ def run():
 	app.exec_()
 
 if __name__ == "__main__":
-	print("A")
 
 	run()
 	

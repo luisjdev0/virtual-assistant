@@ -2,8 +2,25 @@ from sys import exc_info
 
 #Clase base para decodificar CCF
 class jl_reader:
+	'''
+	Clase base para decodificar CCF.
+	'''
 	def __init__ (self, fkeys : dict, lkeys : dict, skeys : dict, fsep = '$', lsep = '|', thr_exc = False):
+		'''
+		Inicia la clase decodificadora de CCF.
 
+		@param fkeys: Llaves que obtienen datos.
+
+		@param lkeys: Llaves mayores (funciones principales).
+
+		@param skeys: Llaves modificadoras de valores.
+
+		@param fsep: Caracter que identifica a las skeys.
+
+		@param lsep: Caracter que identifica a als fkeys.
+
+		@param thr_exc: True imprime las excepciones, False no imprime las excepciones.
+		'''
 		self.fkeys = fkeys
 		self.lkeys = lkeys
 		self.skeys = skeys
@@ -40,7 +57,11 @@ class jl_reader:
 
 	#Decodifica la línea pasada por parámetro
 	def decode_line(self, line):
-		
+		'''
+		Decodificar una línea CCF.
+
+		@param line: Linea de texto a decodificar.
+		'''
 		#Si la línea está vacía, retorna None
 		if line.split(' ')[0] == ' ' or line.split(' ')[0] == '':
 			return None
@@ -83,6 +104,11 @@ class jl_reader:
 	
 	#Decodifica un fichero línea a línea
 	def decode_file(self, file_path):
+		'''
+		Decodifica el fichero CCF pasado por parámetro.
+
+		@param file_path: Ruta al fichero CCF a decodificar.
+		'''
 		outputs = []
 		with open(file_path, "r", encoding='UTF-8') as file:
 			lines = list(file.readlines())
@@ -95,6 +121,11 @@ class jl_reader:
 	
 	#Decodifica texto plano como si fuera un documento externo
 	def decode_document(self, text):
+		'''
+		Decodifica un fichero CCF recibiendo el texto plano.
+
+		@param text: Texto plano del fichero a decodificar.
+		'''
 		lines = text.split('\n')
 		for i in range(len(lines)):
 			lines[i] = lines[i].replace("\n", '')

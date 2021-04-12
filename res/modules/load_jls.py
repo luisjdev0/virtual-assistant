@@ -2,7 +2,15 @@ from res.modules.jls_base import jl_reader
 
 #Clase Base de decodificadores CCF en CASIOPEA
 class jls_bass:
+	'''
+	Carga las utilidades necesarias para decodificar CCF.
+	'''
 	def __init__(self, keys = ""):
+		'''
+		Inicia el control del decodificador CCF.
+
+		@param keys: Llaves para cargar las funciones del decodificador CCF.
+		'''
 		self.control_var = None #Variable de control que registra las últimas entradas
 		self.data = {} #Diccionario serializable
 

@@ -1,9 +1,59 @@
-# Asistente Virtual (Casiopea v0.0.0.6)
+# Asistente Virtual (Casiopea v0.0.0.7)
 
 
 ## Descripción
 
 Casiopea es un asistente virtual pseudointeligente, el cual está diseñado para optimizar el tiempo, está programado en python, usa interfaces graficas de Qt, Serialización en JSON, Encodificación en un sistema personalizado llamado CCF (Casiopea Command File) y Sistema de comandos (adición/administración) Aún se encuentra en desarollo.
+
+## Log Cambios (v0.0.0.7)
+
+### Cambios generales
+
+- Se agregó un splash screen.
+- Se documentó el código actual.
+- Se mejoró el módulo que detectaba si las claves eran únicas al crear/modificar comandos.
+- Se modificó la función de reconocimiento de voz.
+- Ahora si no se detecta micrófono finaliza los hilos de reconocimiento de voz en main_window.
+- Ahora los hilos del main_window arrancan en showEvent().
+- Ahora el administrador de comandos lista los comandos desde el show_event().
+- Los comandos funcionan por voz correctamente.
+- Ahora los hilos en el main_window están en un diccionario.
+- Ahora las ventanas secundarias (ej panel de ajustes) están en un diccionario.
+- Ahora el micrófono reconoce si está activado o no.
+- El sistema Speech to Text retorna "N/M" o "N/A" si no hay micrófono o no reconoce respectivamente.
+- Se creó la clase "other_window_base" para ventanas nor principales.
+- Ahora las clases de las ventanas no principales, heredan de "other_window_base".
+- Se añadió el archivo "bugs.md" en donde se registrarán todos los bugs encontrados.
+- Se retiró del repositorio de git "res/user-data/".
+- Se controló una excepción de reconocimiento de voz en los hilos de main_window al entrar en showEvent.
+
+### Sistema de log
+
+- Se mejoró el sistema de log en general.
+- Ahora el logfile se actualiza con cada escritura.
+- La estructura del timeline del log, ahora es [HH:MM:SS].
+- Se agregó el nombre del hilo desde el cual se escribe el log.
+
+### Sistema de espera
+
+- Se integró sistema de espera del asistente.
+- El titulo de la ventana principal cambia según está o no en espera.
+- Ahora se puede ver en el main_window si el sistema está en espera o no.
+    - Se pueden usar los siguientes comandos para entrar en espera:
+        - "Espera".
+        - "desactivate".
+        - "silencio".
+    - Para salir del modo espera hay que decir el nombre del asistente.
+- Se agregó la key "listen" en globaldata para controlar el modo espera del asistente.
+- Los comandos no ejecutan si el asistente está en espera.
+
+### Sistema de interacción con la UI por voz
+
+- Ahora se puede interactuar por voz con los botones de la UI en pantalla.
+- Se agregó el diccionario "voice_rules" donde se relacionan los botones y el comando por voz.
+- Ahora cada ventana secundaria cuenta con su hilo de reconocimiento de voz.
+- Ahora la variable in_focus controla el foco de cada ventana.
+- El método focus_info ahora gestiona el foco de las ventanas.
 
 ## Log Cambios (v0.0.0.6) algunas pequeñas mejoras
 
